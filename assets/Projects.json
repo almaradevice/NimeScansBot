@@ -1,0 +1,183 @@
+{
+    "CLASSMATE":{
+        "rates":{
+            "5074802729":5
+        },
+        "cover_path":"CLASSMATE_cover.jpg",
+        "alternatif":[
+            "Classmate",
+            "클래스메이트",
+            "Teman Sekelas",
+            "I’ll Be Your Friend Classmate"
+        ],
+        "genre":[
+            "Horror",
+            "Mystery",
+            "Psychological",
+            "Romance",
+            "School Life",
+            "Supernatural"
+        ],
+        "sinopsis":"\"Aku akan menjadi temanmu.\"\nHantu laki-laki bernama Lee Haesu mengunjungi Eunha Joo yang terbuang.\nSaat ia menerima pertemanan yang berbahaya, berbagai kejadian tak terduga mulai terjadi di sekitar Eunha…\nAkankah uluran tangan teman misteriusnya menjadi penyelamat, atau justru kutukan?",
+        "chapters":{
+            "001":{
+                "chapter_path":"Classmate_Ch1.pdf",
+                "chapter_name":"Chapter 01",
+                "chapter_keypass":null
+            }
+        }
+    },
+    "BECAME THE PATRON OF VILLAINS":{
+        "rates":{},
+        "cover_path":"BECAME THE PATRON OF VILLAINS_cover.jpg",
+        "alternatif":[
+            "악당들의 후원자가 되었다",
+            "Raising Villains the Right Way",
+            "I Became the Patron of Villains",
+            "Menjadi Pelindung Para Penjahat"
+        ],
+        "genre":[
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Fantasy",
+            "Romance"
+        ],
+        "sinopsis":"Seorang budak bereinkarnasi menjadi bangsawan figuran dalam sebuah game yang diramal akan mati di tangan para penjahat. Demi bertahan hidup dan menikmati kemewahan, ia memutuskan untuk mengadopsi dan membimbing para calon penjahat kecil tersebut ke jalan yang benar. Namun, meski berhasil membesarkan mereka menjadi anak-anak berbakat, ia justru berakhir menjadi dalang utama di balik bayang-bayang kerajaan.",
+        "chapters":{}
+    },
+    "PLAYTHING":{
+        "rates":{},
+        "cover_path":"PLAYTHING_cover.jpg",
+        "alternatif":[
+            "놀이감",
+            "Her Toys",
+            "A Sense of Amusement",
+            "A Sense of Play",
+            "alat permainan"
+        ],
+        "genre":[
+            "Action",
+            "Drama",
+            "Psychological",
+            "School Life",
+            "Tragedy"
+        ],
+        "sinopsis":"Lee Myung-jun, Wakil Ketua Grup Hyun-do yang kehilangan putrinya akibat perundungan, mengadopsi Yoon Karma demi menuntaskan dendamnya. Yoon Karma sendiri adalah pembelot psikopat dari Korea Utara sekaligus senjata manusia sadis hasil eksperimen narkoba. Setelah melarikan diri ke Korea Selatan, gadis ini mulai memburu para pembully di sekolah untuk memuaskan hasrat sadisnya sekaligus membalaskan dendam ayah barunya.",
+        "chapters":{}
+    },
+    "EVERYONE LOVES HER":{
+        "rates":{},
+        "cover_path":"EVERYONE LOVES HER_cover.jpg",
+        "alternatif":[
+            "everyone loves her",
+            "모두가 그녀를 사랑해",
+            "Semua Orang Menyukainya"
+        ],
+        "genre":[
+            "Action",
+            "Adventure",
+            "Crime",
+            "Fantasy",
+            "Super Power",
+            "Supernatural"
+        ],
+        "sinopsis":"Kehidupan Kang Min-Ah berubah total setelah mendapatkan kemampuan misterius secara tiba-tiba. Di tengah gejolak emosi dan rasa keadilan yang tertekan, ia harus memilih jalan yang penuh konsekuensi berat. Kini, Min-Ah memulai perjalanan baru untuk memahami kekuatan tersebut dan menentukan arah hidupnya di masa depan.",
+        "chapters":{}
+    },
+    "FOG LAND":{
+        "rates":{
+            "1308147558":5
+        },
+        "cover_path":"FOG LAND_cover.jpg",
+        "alternatif":[
+            "포그랜드",
+            "The Land of Fog",
+            "FOGLAND",
+            "Negeri Kabut",
+            "Tanah Kabut"
+        ],
+        "genre":[
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Crime",
+            "Super Power"
+        ],
+        "sinopsis":"Kang Dante, seorang guru sains, terjebak di tengah kerusuhan saat dikirim untuk membina narapidana di Fogland, sebuah penjara internasional yang misterius. Untuk bisa bertahan hidup dan menemukan jalan keluar dari tempat berbahaya tersebut, ia tidak punya pilihan lain selain menjadi pemimpin di antara para tahanan.",
+        "chapters":{}
+    },
+    "BUNKER DAYS":{
+        "rates":{},
+        "cover_path":"BUNKER DAYS_cover.jpg",
+        "alternatif":[
+            "벙커의 낮",
+            "Daytime in the bunker",
+            "Bunker Days"
+        ],
+        "genre":[
+            "Romance",
+            "Action",
+            "Psychological",
+            "Comedy",
+            "Drama"
+        ],
+        "sinopsis":"Seo-woo, seorang siswi SMA yang kesepian, mencoba mengakhiri hidupnya namun malah berakhir bersembunyi di sebuah bunker terbengkalai. Sial baginya, tempat perlindungan itu berubah menjadi penjara saat ia terjebak di dalam bersama Won-hyeok—anak laki-laki dari masa lalunya yang pernah ia tolak, kini kembali dengan kondisi tubuh berlumuran darah.",
+        "chapters":{}
+    },
+    "THE PRINCESS GOES TO SCHOOL":{
+        "rates":{},
+        "cover_path":"THE PRINCESS GOES TO SCHOOL_cover.jpg",
+        "alternatif":[
+            "공주님학교가신다",
+            "The Princess Goes To School"
+        ],
+        "genre":[
+            "Action",
+            "Comedy",
+            "School Life",
+            "Romance",
+            "Drama"
+        ],
+        "sinopsis":"Kim Seol hidup sebagai siswi SMA biasa di Korea Selatan tanpa menyadari bahwa ia sebenarnya adalah putri dari Kim Jeong-un dan kandidat pemimpin masa depan Korea Utara. Demi melindungi keselamatannya, Jeong Su-hyeon, seorang \"Black Agent\" termuda, dikirim untuk menyusup ke sekolah yang sama. Kisah komedi romantis pun dimulai saat sang agen rahasia harus menjaga sang putri yang sama sekali tidak tahu apa-apa tentang identitas aslinya.",
+        "chapters":{}
+    },
+    "MY POSSESSION BECAME A GHOST STORY":{
+        "rates":{},
+        "cover_path":"MY POSSESSION BECAME A GHOST STORY_cover.jpg",
+        "alternatif":[
+            "빙의했더니 괴담이 돼 버렸다",
+            "I Possessed a Body And Became an Urban Legend",
+            "I Possessed Someone",
+            "and It Turned Into a Ghost Story",
+            "I Transmigrated and Became an Urban Legend"
+        ],
+        "genre":[
+            "Comedy",
+            "Fantasy",
+            "Romance",
+            "Psychological",
+            "Horror"
+        ],
+        "sinopsis":"Seorang gadis bertransmigrasi menjadi Evangeline, seorang villainess yang terbangun di dalam peti matinya sendiri saat pemakaman. Tanpa ingatan tentang novel yang ia masuki, ia berusaha membersihkan reputasi buruknya namun justru terlibat dalam kejadian supranatural setelah memanggil kucing bermata three misterius. Sementara Gabriel, sang komandan ksatria, mulai mendekatinya, Evangeline tidak menyadari bahwa keberadaannya memicu berbagai fenomena horor yang menakutkan bagi orang-orang di sekitarnya.",
+        "chapters":{}
+    },
+    "THE DEMON KING OVERRUN BY HEROES":{
+        "rates":{},
+        "cover_path":"THE DEMON KING OVERRUN BY HEROES_cover.jpg",
+        "alternatif":[
+            "마왕인데 용사가 너무 많음",
+            "I faithfully followed the 'Demon King's Textbook; only to be killed by the heroes"
+        ],
+        "genre":[
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Fantasy",
+            "Revenge"
+        ],
+        "sinopsis":"Setelah tewas karena terlalu patuh mengikuti panduan standar Raja Iblis, Berje terbangun kembali ke masa lalu melalui regresi. Ia menyadari bahwa kastil dan dirinya hanyalah menjadi tempat berburu bagi para pahlawan. Kini, Berje bertekad membuang semua aturan lama dan berjuang dengan caranya sendiri agar tidak lagi menjadi mangsa di era yang brutal ini.",
+        "chapters":{}
+    }
+}
