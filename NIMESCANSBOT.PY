@@ -10,20 +10,26 @@ import sys
 import json
 import math
 import time
+import hashlib
 import asyncio
 import logging
 import functools
-# import PyPDF2
+import PyPDF2
 from io import BytesIO
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Optional, Union, Dict, Any, List, Tuple
 from dataclasses import dataclass
 
+import requests
+from requests.exceptions import HTTPError, ConnectionError, ReadTimeout, RequestException
+try: from json.decoder import JSONDecodeError
+except ImportError: JSONDecodeError = ValueError
+
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram import KeyboardButton, ReplyKeyboardMarkup
+from telegram import KeyboardButton, ReplyKeyboardMarkup, CopyTextButton
 from telegram.ext import (
-    ApplicationBuilder, CommandHandler, CallbackQueryHandler,
+    ApplicationBuilder, CommandHandler, CallbackQueryHandler, 
     InlineQueryHandler, MessageHandler, ContextTypes, filters, JobQueue
 )
 from telegram.error import TelegramError, BadRequest
@@ -116,6 +122,32 @@ class UIColor:
 # Aliases for backward compatibility
 printn = UIColor.print_colored
 
+def format_bytes(size, precision=2):
+    """
+    Format a size in bytes to a human-readable string (e.g., 1024 -> '1.00KB').
+
+    Args:
+        size (int or float): The size in bytes.
+        precision (int): Number of decimal places (default 2).
+
+    Returns:
+        str: Formatted string.
+
+    Raises:
+        ValueError: If size is negative.
+    """
+    if size < 0: raise ValueError("Size cannot be negative")
+    if size == 0: return f"0.{'0' * precision}B"
+
+    units = ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
+
+    # Calculate the unit index using log2
+    unit_index = min(int(math.log2(size) // 10), len(units) - 1)
+    scaled_size = size / (1024 ** unit_index)
+
+    return f"{scaled_size:.{precision}f} {units[unit_index]}B"
+
+
 class Database:
     """Thread-safe database manager"""
     def __init__(self, db_file: Path):
@@ -151,7 +183,7 @@ class Database:
 
     def user_exists(self, user_id: str) -> bool:
         return user_id in self._data
-
+    
     def _users(self) -> list:
         return list(self._data.keys())
 
@@ -166,11 +198,12 @@ class Database:
 
 
     def _projects(self):
+        self._load()
         return self._data
 
     def get_project(self, title: str) -> Dict[str, Any]:
         return self._data.get(title, {})
-
+    
     def set_rate(self, title, rate):
         self._data[title]['rates'].update(rate)
         self._save()
@@ -184,31 +217,43 @@ class Database:
 db_bot = Database(config.db_file)
 db_projects = Database(config.fp_projects)
 
-def LockPDF(input_file: Path, user_pwd: str, owner_pwd: str) -> BytesIO:
+def LockPDF(input_url: str, user_pwd: str, owner_pwd: str) -> BytesIO:
     # Menggunakan pathlib untuk membaca bytes secara langsung
-    pdf_data = BytesIO(input_file.read_bytes())
+    resp_pdf = requests.get(input_url)
+    filename = resp_pdf.headers.get('Content-Disposition').split('"')[1]
 
-    reader = PyPDF2.PdfReader(pdf_data)
+    input_buffer = io.BytesIO(resp_pdf.content)
+    reader = PyPDF2.PdfReader(input_buffer)
     writer = PyPDF2.PdfWriter()
 
     for page in reader.pages:
         writer.add_page(page)
 
-    writer.encrypt(user_pwd, owner_pwd, permissions_flag=0)
+    writer.encrypt(
+        user_pwd,
+        owner_pwd,
+        permissions_flag=0  # -3904
+    )
 
     output_buffer = BytesIO()
+    output_buffer.name = filename
     writer.write(output_buffer)
-    output_buffer.seek(0)
 
-    return output_buffer
+    file_size = output_buffer.tell()
+
+    output_buffer.seek(0)
+    file_hash = hashlib.md5(output_buffer.read()).hexdigest()
+
+    output_buffer.seek(0)
+    return output_buffer, file_size, file_hash
 
 class MessageManager:
     """Message management utilities"""
 
     @staticmethod
-    async def send_temp(context: ContextTypes.DEFAULT_TYPE,
-                       chat_id: int,
-                       text: str,
+    async def send_temp(context: ContextTypes.DEFAULT_TYPE, 
+                       chat_id: int, 
+                       text: str, 
                        reply_markup: Optional[InlineKeyboardMarkup] = None,
                        delay: int = None,
                        protect_content=False) -> Optional[int]:
@@ -259,7 +304,7 @@ def generate_main_menu_keyboard(is_admin: bool = False) -> InlineKeyboardMarkup:
         ],
         [InlineKeyboardButton("📄 Privacy Policy", callback_data='privacy')]
     ]
-
+    
     # if is_admin:
     #     keyboard.insert(1, [
     #         InlineKeyboardButton("📢 Broadcast", callback_data='broadcast_mode'),
@@ -289,7 +334,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     """Global error handler"""
     logger.error(f"Update {update} caused error: {context.error}")
 
-    if (update and hasattr(update, 'callback_query') and
+    if (update and hasattr(update, 'callback_query') and 
         update.callback_query and update.callback_query.message):
         try:
             await update.callback_query.answer(
@@ -406,32 +451,44 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         _project_details = context.user_data.get('project_details')
         ch_idx = data.split(':')[1]
         ch_data = _project_details['chapters'][ch_idx]
-        file_path = Path('chapters', ch_data['chapter_path'])
-        if not file_path.exists(): return
+        file_path = ch_data['chapter_path']
+
         if not context.user_data.get('geted_chapters'): context.user_data['geted_chapters'] = []
         if context.user_data['geted_chapters'].count(file_path.name): return
         context.user_data['geted_chapters'].append(file_path.name)
         printn(f"?95>>> ?94`{file_path}")
 
-        # dynamic_pw = f"{config.base_password}{int(datetime.now().timestamp())}"
-        # pdf_terkunci = LockPDF(file_path, dynamic_pw, "n1M3sC4N_S3cr3t_K3y_!@#$%^&*()")
-        pdf_terkunci = open(file_path, 'rb')
+        dynamic_pw = f"{config.base_password}{int(datetime.now().timestamp())}"
+        pdf_BytesIO, file_size, file_hash = LockPDF(
+            input_url=ch_data['chapter_url'],
+            user_pwd=dynamic_pw,
+            owner_pwd="n1M3sC4N_S3cr3t_K3y_!@#$%^&*()"
+        )
 
         caption = (
             f"📖 <b>{context.user_data['project_title']}</b>\n"
             f"📑 {ch_data['chapter_name']}\n\n"
+            f"<blockquote>📝 <b>File Name:</b> <code>{ch_data['chapter_path']}</code>\n"
+            f"📦 <b>Size:</b> {format_bytes(file_size)}\n"
+            f"📌 <b>Type:</b> Document\n"
+            f"🔤 <b>Extension:</b> PDF\n"
+            f"⚓ <b>MD5:</b> <code>{file_hash}</code></blockquote>\n\n"
             f"⚠️ <i>This document is confidential. Internal use only.</i>\n"
             "<b>- NIMESCANS</b>\n"
         )
+        reply_markup = InlineKeyboardMarkup([
+            [InlineKeyboardButton("🔑 Password PDF", copy_text=CopyTextButton(dynamic_pw))]
+        ])
         sent_msg = await context.bot.send_document(
             chat_id=query.message.chat_id,
-            document=pdf_terkunci,
+            document=pdf_BytesIO,
             caption=caption,
             filename=file_path.name,
+            reply_markup=reply_markup,
             parse_mode=ParseMode.HTML,
             protect_content=True
         )
-        pdf_terkunci.close()
+        # pdf_terkunci.close()
 
         document_life = 300
         context.job_queue.run_once(
@@ -446,7 +503,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 # f"🔑 <tg-spoiler>{dynamic_pw}</tg-spoiler>\n\n"
                 "Selamat membaca~ 🍒\n\n"
                 "<i>Kalau suka manhwa ini, jangan lupa kasih rating ya!</> ⭐"
-            )
+            ),
+            protect_content=True
         )
 
 
@@ -466,10 +524,10 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     try: await message.delete()
     except TelegramError: pass
 
-    await MessageManager.send_temp(
-        context, message.chat_id,
-        text_html, delay=60
-    )
+    # await MessageManager.send_temp(
+    #     context, message.chat_id,
+    #     text_html, delay=60
+    # )
 
 
 
@@ -640,8 +698,8 @@ async def project_details_handler(update: Update, context: ContextTypes.DEFAULT_
             InlineKeyboardButton("▶️", callback_data=f'chapters_index:{nex_chapters_index}')
         ])
 
-    for i in range(0, len(buttons), 4):
-        keyboard.append(buttons[i:i + 4])
+    for i in range(0, len(buttons), 3):
+        keyboard.append(buttons[i:i + 3])
 
     keyboard.append([InlineKeyboardButton("⭐ Beri Rating", callback_data="project_rate")])
     keyboard.append([
@@ -649,7 +707,7 @@ async def project_details_handler(update: Update, context: ContextTypes.DEFAULT_
         InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu")
     ])
     reply_markup = InlineKeyboardMarkup(keyboard)
-    with open(Path('assets', project['cover_path']), 'rb') as photo:
+    with open(Path('cover', project['cover_path']), 'rb') as photo:
         await query.message.delete() # Hapus pesan katalog
         await context.bot.send_photo(
                 chat_id=query.message.chat_id,
