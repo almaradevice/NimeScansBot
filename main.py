@@ -223,7 +223,7 @@ def LockPDF(input_url: str, user_pwd: str, owner_pwd: str) -> BytesIO:
     resp_pdf = requests.get(input_url)
     filename = resp_pdf.headers.get('Content-Disposition').split('"')[1]
 
-    input_buffer = io.BytesIO(resp_pdf.content)
+    input_buffer = BytesIO(resp_pdf.content)
     reader = PyPDF2.PdfReader(input_buffer)
     writer = PyPDF2.PdfWriter()
 
