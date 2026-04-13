@@ -452,7 +452,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         _project_details = context.user_data.get('project_details')
         ch_idx = data.split(':')[1]
         ch_data = _project_details['chapters'][ch_idx]
-        file_path = ch_data['chapter_path']
+        file_path = Path(ch_data['chapter_path'])
 
         if not context.user_data.get('geted_chapters'): context.user_data['geted_chapters'] = []
         if context.user_data['geted_chapters'].count(file_path.name): return
