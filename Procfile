@@ -1,1 +1,1 @@
-worker: python NIMESCANSBOT.PY
+worker: python main.py
