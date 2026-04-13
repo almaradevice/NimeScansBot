@@ -1,7 +1,8 @@
 {
     "CLASSMATE":{
         "rates":{
-            "5074802729":5
+            "5074802729":4,
+            "1308147558":5
         },
         "cover_path":"CLASSMATE_cover.jpg",
         "alternatif":[
@@ -20,9 +21,44 @@
         ],
         "sinopsis":"\"Aku akan menjadi temanmu.\"\nHantu laki-laki bernama Lee Haesu mengunjungi Eunha Joo yang terbuang.\nSaat ia menerima pertemanan yang berbahaya, berbagai kejadian tak terduga mulai terjadi di sekitar Eunha…\nAkankah uluran tangan teman misteriusnya menjadi penyelamat, atau justru kutukan?",
         "chapters":{
-            "001":{
+            "01":{
+                "chapter_url":"https://ar-hosting.pages.dev/1776014941503.pdf",
                 "chapter_path":"Classmate_Ch1.pdf",
                 "chapter_name":"Chapter 01",
+                "chapter_size":13310982,
+                "chapter_hash":"example-hash",
+                "chapter_keypass":null
+            },
+            "02":{
+                "chapter_url":"https://ar-hosting.pages.dev/1776014877828.pdf",
+                "chapter_path":"Classmate_Ch2.pdf",
+                "chapter_name":"Chapter 03",
+                "chapter_size":11589113,
+                "chapter_hash":"example-hash",
+                "chapter_keypass":null
+            },
+            "03":{
+                "chapter_url":"https://ar-hosting.pages.dev/1776014824132.pdf",
+                "chapter_path":"Classmate_Ch3.pdf",
+                "chapter_name":"Chapter 03",
+                "chapter_size":13941887,
+                "chapter_hash":"example-hash",
+                "chapter_keypass":null
+            },
+            "04":{
+                "chapter_url":"",
+                "chapter_path":"Classmate_Ch04.pdf",
+                "chapter_name":"Chapter 04",
+                "chapter_size":10353017,
+                "chapter_hash":"example-hash",
+                "chapter_keypass":null
+            },
+            "05":{
+                "chapter_url":"",
+                "chapter_path":"Classmate_Ch05.pdf",
+                "chapter_name":"Chapter 05",
+                "chapter_size":6056217,
+                "chapter_hash":"example-hash",
                 "chapter_keypass":null
             }
         }
@@ -87,9 +123,7 @@
         "chapters":{}
     },
     "FOG LAND":{
-        "rates":{
-            "1308147558":5
-        },
+        "rates":{},
         "cover_path":"FOG LAND_cover.jpg",
         "alternatif":[
             "포그랜드",
