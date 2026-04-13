@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Coded by aqil.almara - t.me/prudentscitus
-BOT_TOKEN = "8540265358:AAHG-7yODqUcto87f_KmhUESHhZWd8loZJA"
 
 # Imports
 import os
@@ -202,6 +201,7 @@ class Database:
         return self._data
 
     def get_project(self, title: str) -> Dict[str, Any]:
+        self._load()
         return self._data.get(title, {})
     
     def set_rate(self, title, rate):
@@ -209,6 +209,7 @@ class Database:
         self._save()
 
     def items(self):
+        self._load()
         return self._data.items()
 
     def __len__(self):
