@@ -38,7 +38,7 @@ from telegram.constants import ParseMode
 @dataclass
 class Config:
     """Bot configuration"""
-    bot_token: str = os.getenv("BOT_TOKEN", BOT_TOKEN)
+    bot_token: str = os.getenv("BOT_TOKEN")
     db_file: Path = Path('assets', 'NIMESCANSBOT.db.json')
     fp_projects: Path = Path('assets', 'Projects.json')
     admin_user_ids: List[int] = None
