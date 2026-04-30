@@ -3,3 +3,4 @@ python-telegram-bot[job-queue]
 python-dotenv
 PyPDF2
 requests
+flask
