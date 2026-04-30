@@ -666,6 +666,7 @@ async def project_details_handler(update: Update, context: ContextTypes.DEFAULT_
     project = db_projects.get(project_title, {})
     total_chapter = len(project['chapters'])
     context.user_data['project_details'] = project
+    slug = project_title.lower().replace(' ', '-')
 
     rates, rate = project['rates'], 5
     if rates: rate = sum(rates.values()) /len(rates)
@@ -682,29 +683,29 @@ async def project_details_handler(update: Update, context: ContextTypes.DEFAULT_
         "Pilih chapter yang ingin dibaca:"
     )
 
-    buttons_size = 30
-    buttons = []
-    project_items = list(project['chapters'].items())
-    for ch_idx, ch_data in project_items[chapters_index:chapters_index + buttons_size]:
-        buttons.append(InlineKeyboardButton(f"Ch. {ch_idx}", callback_data=f"get_chapter:{ch_idx}"))
+    # buttons_size = 30
+    # buttons = []
+    # project_items = list(project['chapters'].items())
+    # for ch_idx, ch_data in project_items[chapters_index:chapters_index + buttons_size]:
+    #     buttons.append(InlineKeyboardButton(f"Ch. {ch_idx}", callback_data=f"get_chapter:{ch_idx}"))
 
     keyboard = []
-    if total_chapter > buttons_size:
-        max_chapters_index = buttons_size * (math.ceil(total_chapter / buttons_size)-1)
-        nex_chapters_index = buttons_size + chapters_index
-        if nex_chapters_index > max_chapters_index:
-            nex_chapters_index = -buttons_size
-        keyboard.append([
-            InlineKeyboardButton("◀️", callback_data=f'chapters_index:{chapters_index - buttons_size}'),
-            InlineKeyboardButton("▶️", callback_data=f'chapters_index:{nex_chapters_index}')
-        ])
+    # if total_chapter > buttons_size:
+    #     max_chapters_index = buttons_size * (math.ceil(total_chapter / buttons_size)-1)
+    #     nex_chapters_index = buttons_size + chapters_index
+    #     if nex_chapters_index > max_chapters_index:
+    #         nex_chapters_index = -buttons_size
+    #     keyboard.append([
+    #         InlineKeyboardButton("◀️", callback_data=f'chapters_index:{chapters_index - buttons_size}'),
+    #         InlineKeyboardButton("▶️", callback_data=f'chapters_index:{nex_chapters_index}')
+    #     ])
 
-    for i in range(0, len(buttons), 3):
-        keyboard.append(buttons[i:i + 3])
+    # for i in range(0, len(buttons), 3):
+    #     keyboard.append(buttons[i:i + 3])
 
     keyboard.append([
         InlineKeyboardButton("⭐ Beri Rating", callback_data="project_rate"),
-        InlineKeyboardButton("🌐 Read Online", web_app={"url": "https://worker-production-de73.up.railway.app/"})
+        InlineKeyboardButton("🌐 Read Online", web_app={"url": f"https://worker-production-de73.up.railway.app/?slug={slug}"})
     ])
     keyboard.append([
         InlineKeyboardButton("📚 List Project", callback_data="back_project_list"),
