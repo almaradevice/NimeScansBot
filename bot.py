@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Coded by aqil.almara - t.me/prudentscitus
-BOT_TOKEN = "8684283597:AAG88DGFKl4LEcpo55LnkHG6Sp27USd0waQ"
 
 # Imports
 import os
