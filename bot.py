@@ -704,7 +704,7 @@ async def project_details_handler(update: Update, context: ContextTypes.DEFAULT_
 
     keyboard.append([
         InlineKeyboardButton("⭐ Beri Rating", callback_data="project_rate"),
-        InlineKeyboardButton("🌐 Read Online", web_app={"url": " http://10.44.100.124:5000/"})
+        InlineKeyboardButton("🌐 Read Online", web_app={"url": "https://worker-production-de73.up.railway.app/"})
     ])
     keyboard.append([
         InlineKeyboardButton("📚 List Project", callback_data="back_project_list"),
