@@ -1,6 +1,6 @@
 python-telegram-bot
 python-telegram-bot[job-queue]
 python-dotenv
-PyPDF2
 requests
+PyPDF2
 flask
